@@ -1,13 +1,13 @@
 {
   "main.css": "/dndem/static/css/main.ad27f837.chunk.css",
-  "main.js": "/dndem/static/js/main.06b17095.chunk.js",
-  "main.js.map": "/dndem/static/js/main.06b17095.chunk.js.map",
+  "main.js": "/dndem/static/js/main.6a1242b1.chunk.js",
+  "main.js.map": "/dndem/static/js/main.6a1242b1.chunk.js.map",
   "runtime~main.js": "/dndem/static/js/runtime~main.dc3153e4.js",
   "runtime~main.js.map": "/dndem/static/js/runtime~main.dc3153e4.js.map",
   "static/js/2.ff2c5cb2.chunk.js": "/dndem/static/js/2.ff2c5cb2.chunk.js",
   "static/js/2.ff2c5cb2.chunk.js.map": "/dndem/static/js/2.ff2c5cb2.chunk.js.map",
   "index.html": "/dndem/index.html",
-  "precache-manifest.e1da828f8cc2b6aede6eb761be1e1c22.js": "/dndem/precache-manifest.e1da828f8cc2b6aede6eb761be1e1c22.js",
+  "precache-manifest.386ba4285235d26ae6f65ced633ce19b.js": "/dndem/precache-manifest.386ba4285235d26ae6f65ced633ce19b.js",
   "service-worker.js": "/dndem/service-worker.js",
   "static/css/main.ad27f837.chunk.css.map": "/dndem/static/css/main.ad27f837.chunk.css.map"
 }

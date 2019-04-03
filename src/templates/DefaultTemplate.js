@@ -11,7 +11,7 @@ export default class DefaultTemplate extends React.Component {
                     <header className="default_header">
                         <Navbar bg="light" variant="light" expand="sm" >
                             <Container>
-                                <Navbar.Brand href="/">DnDEM</Navbar.Brand>
+                                <Navbar.Brand href="#/">DnDEM</Navbar.Brand>
                                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
                                 <Navbar.Collapse id="basic-navbar-nav">

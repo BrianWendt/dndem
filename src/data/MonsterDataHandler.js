@@ -88,7 +88,6 @@ export default class MonsterDataHandler {
     }
     
     sortDirSwitch(field){
-        console.log('switch', field, this.getSortField())
         return (field === this.getSortField()) ? (this.getSortDir() * -1) : 1;
     }
       

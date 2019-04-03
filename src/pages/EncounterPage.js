@@ -100,9 +100,11 @@ export default class EncounterPage extends React.Component {
                                         <td>
                                             <InputGroup className="">
                                                 <Form.Control name="name" value={Creature.name} placeholder="Creature Name" onChange={this.handleUpdateValue} data-key={Creature.key} />
-                                                <InputGroup.Append>
-                                                    <Button href={Creature.href} target="_blank" variant="info">&#x1f517;</Button>
-                                                </InputGroup.Append>
+                                                {Creature.href.length > 0 &&
+                                                    <InputGroup.Append>
+                                                        <Button href={Creature.href} target="_blank" variant="info">&#x1f517;</Button>
+                                                    </InputGroup.Append>
+                                                }
                                             </InputGroup>
                                         </td>
                                         <td>
