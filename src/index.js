@@ -11,7 +11,7 @@ import MonstersPage from './pages/MonstersPage';
 import * as serviceWorker from './serviceWorker';
 
 const routing = (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <div>
                 <Route path="/" component={IndexPage} exact  />
                 <Route path="/monsters/" component={MonstersPage} />
