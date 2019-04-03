@@ -71,7 +71,7 @@ export default class EncounterPage extends React.Component {
             init: 0,
             note: ''
         };
-        //console.log('handleAddCreatureSubmit', Creature);
+
         this.EncounterDataHandler.addCreature(Creature);
         this.updateEncounterState();
         this.handleClose();
@@ -80,7 +80,7 @@ export default class EncounterPage extends React.Component {
     render(){
             return (<DefaultTemplate>
                         <ButtonGroup className="mb-2">
-                            <Button href="/monsters/" variant="success">&#10010; Add Monster From Directory</Button>
+                            <Button href="#/monsters/" variant="success">&#10010; Add Monster From Directory</Button>
                             <Button onClick={this.handleAddCreature} variant="outline-success">&#10010; Add Creature/Character</Button>
                         </ButtonGroup>
                         {this.state.Encounter.length > 0 &&

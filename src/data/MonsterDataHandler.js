@@ -4,9 +4,9 @@ import { xp } from './xp';
 export default class MonsterDataHandler {
     
     _data = [];
-    filterName = '';
-    filterCR = 'all';
-    filterRace = 'all';
+    filterName = "";
+    filterCR = null;
+    filterRace = null;
     sortField = 'name';
     sortDir = 1;
     
@@ -17,8 +17,20 @@ export default class MonsterDataHandler {
         this._data = Monsters.Monsters;
     }
     
+    getFilterName(){ return this.filterName || ""; }
+    getFilterCR(){ return (typeof this.filterCR == "string") ? this.filterCR : "all"; }
+    getFilterRace(){ return this.filterRace || "all"; }
+    getSortField(){ return this.sortField || "name"; }
+    getSortDir(){ return parseInt(this.sortDir) || 1; }
+    getPageNumber(){ return parseInt(this.pageNumber) || 1; }
+    getPerPage(){ return this.perPage; }
+    
+    setPageNumber(number){  this.pageNumber = parseInt(number); }
+    filterByCR(value){ this.filterCR = value; }
+    filterByRace(value){ this.filterRace = value; }
+    
     get(id){
-        const MonsterData = Monsters.Monsters.find(function(Monster){
+        const MonsterData = this._data.find(function(Monster){
             return (Monster.id === id);
         });
         return (MonsterData === false) ? false :  new Monster(MonsterData);
@@ -35,23 +47,19 @@ export default class MonsterDataHandler {
     }
     
     pageData(){
-        const start_idx = ((this.pageNumber - 1) * this.perPage);
-        const end_idx = start_idx + this.perPage;
+        const start_idx = ((this.getPageNumber() - 1) * this.getPerPage());
+        const end_idx = start_idx + this.getPerPage();
         return this.data().filter(function(Monster, idx) {
             return (idx >= start_idx && idx < end_idx);
         });
     }
     
     pages(){
-        return Math.ceil(this.data().length / this.perPage);
-    }
-    
-    setPageNumber(number){
-        this.pageNumber = parseInt(number);
+        return Math.ceil(this.data().length / this.getPerPage());
     }
     
     /*  Sorting direction is toggled by `dir` being 1 or -1 */
-    sortBy(field, dir){
+    sortBy(field, dir = null){
         this.sortField = field;
         this.sortDir = dir;
         
@@ -80,28 +88,18 @@ export default class MonsterDataHandler {
     }
     
     sortDirSwitch(field){
-        return (field === this.sortField) ? (this.sortDir * -1) : 1;
+        console.log('switch', field, this.getSortField())
+        return (field === this.getSortField()) ? (this.getSortDir() * -1) : 1;
     }
       
-    filtered(){
-        return (this.filterCR !== 'all' || this.filterRace !== 'all');
-    }
-    
-    filterByCR(value){
-        this.filterCR = value;
-    }
-    
-    filterByRace(value){
-        this.filterRace = value;
-    }
+    isFiltered(){  return (this.getFilterCR() !== 'all' || this.getFilterRace() !== 'all'); }
     
     _filter(data){
         
         /* Filter by CR */
         var cr_min = 0;
         var cr_max = 10000;
-        
-        if(this.filterCR === 'all'){
+        if(this.getFilterCR() === 'all'){
             //skip
         } else if(this.filterCR.indexOf('-')>0){
             [cr_min, cr_max] = this.filterCR.split('-');
@@ -114,7 +112,7 @@ export default class MonsterDataHandler {
         });
         
         /* Filter By Race */
-        if(this.filterRace !== 'all'){
+        if(this.getFilterRace() !== 'all'){
             data = data.filter(function(Monster){
                 return (this.filterRace === Monster.race);
             }, this);

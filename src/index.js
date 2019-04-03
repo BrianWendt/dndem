@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Route, BrowserRouter as Router } from 'react-router-dom'
+import { Route, HashRouter as Router } from 'react-router-dom'
 
 import EncounterPage from './pages/EncounterPage';
 import IndexPage from './pages/IndexPage';
@@ -14,7 +14,7 @@ const routing = (
         <Router basename={process.env.PUBLIC_URL}>
             <div>
                 <Route path="/" component={IndexPage} exact  />
-                <Route path="/monsters/" component={MonstersPage} />
+                <Route path="/monsters/:query?" component={MonstersPage} />
                 <Route path="/monster/:id" component={MonsterPage} />
                 <Route path="/encounter/" component={EncounterPage} />
             </div>

@@ -16,9 +16,9 @@ export default class DefaultTemplate extends React.Component {
 
                                 <Navbar.Collapse id="basic-navbar-nav">
                                     <Nav className="mr-auto">
-                                        <Nav.Link href="/">Home</Nav.Link>
-                                        <Nav.Link href="/encounter/">Encounter Manager</Nav.Link>
-                                        <Nav.Link href="/monsters/">Monster Directory</Nav.Link>
+                                        <Nav.Link href="#/">Home</Nav.Link>
+                                        <Nav.Link href="#/encounter/">Encounter Manager</Nav.Link>
+                                        <Nav.Link href="#/monsters/">Monster Directory</Nav.Link>
                                     </Nav>
                                 </Navbar.Collapse>
                             </Container>

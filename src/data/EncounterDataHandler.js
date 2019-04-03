@@ -54,7 +54,7 @@ export default class EncounterDataHandler {
             hp: Monster.hitPoints.average,
             init_mod: Monster.initiativeMod,
             init: Roll.d20() + Monster.initiativeMod,
-            href: '/monster/' + Monster.id,
+            href: '#/monster/' + Monster.id,
             ac: Monster.armorClass,
             note: ''
         };
