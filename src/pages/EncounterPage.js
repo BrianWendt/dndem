@@ -69,6 +69,7 @@ export default class EncounterPage extends React.Component {
             ac: form.ac.value,
             init_mod: parseInt(form.init_mod.value),
             init: 0,
+            href: '',
             note: ''
         };
 
