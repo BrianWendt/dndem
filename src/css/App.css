@@ -1,0 +1,12 @@
+.default_header {
+    margin-bottom: 1rem;
+}
+
+.interactive {
+    cursor: pointer;
+}
+
+.block .btn {
+    display: block;
+    width: 100%;
+}
