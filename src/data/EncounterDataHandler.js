@@ -13,6 +13,7 @@ export default class EncounterDataHandler {
     getEncounter(){
         return this.getEncounterData().sort((a, b) => ((a.init > b.init) ? -1 : 1));
     }
+
     
     getEncounterData(){
         return this.Cookies.get(this.key) || [];
