@@ -62,3 +62,4 @@ typings/
 
 # batch scripts
 *.bat
+nbproject/private/private.xml
