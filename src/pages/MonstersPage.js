@@ -186,7 +186,7 @@ export default class MonstersPage extends React.Component {
         query = Object.assign(queryClone, data);
       }
       query.page = page;
-      const href = '#' + this.props.location.pathname + '?' + queryString.stringify(query);
+      const href = this.props.location.pathname + '?' + queryString.stringify(query);
       this.props.history.push(href);
       this.setState({query: query})
   }
