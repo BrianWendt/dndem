@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "DnDEM",
+  "name": "DnDEM: the D&D Encounter Manager",
   "icons": [
     {
       "src": "favicon.ico",

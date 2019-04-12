@@ -26,11 +26,11 @@ export default class MonstersPage extends React.Component {
         };
 
         this.headers = [
-            {name: 'name', title:'Creatue Name', width:''},
-            {name: 'race', title:'Race', width:'135'},
-            {name: 'cr', title:'CR', width:'90'},
-            {name: 'ac', title:'AC', width:'260'},
-            {name: 'hp', title:'HP', width:'90'},
+            {name: 'name', title:'Creatue Name', width:'', md: "auto", xs: "auto"},
+            {name: 'race', title:'Race', width:'135', md: "auto", xs: "2"},
+            {name: 'cr', title:'CR', width:'90', md: "2", xs: "2"},
+            {name: 'ac', title:'AC', width:'260', md: "3", xs: "3"},
+            {name: 'hp', title:'HP', width:'90', md: "2", xs: "2"},
         ];
         
         
@@ -54,7 +54,7 @@ export default class MonstersPage extends React.Component {
 
         return (<DefaultTemplate>
             
-            <Table striped bordered hover size="sm">
+            <Table striped bordered hover size="sm" responsive="sm">
                 <thead>
                     <tr>
                         {this.renderHeaders()}

@@ -8,7 +8,7 @@ export default class MonsterCardDetails extends React.Component {
         const Monster = this.props.Monster;
         const hp = Monster.hitPoints.average + " (" + Monster.hitPoints.roll + ")";
         return (
-            <Table size="sm">
+            <Table size="sm" className="small" responsive>
                 <tbody>
                     
                     <MonsterCard.Detail dt="Armor Class:" dd={Monster.armorClass} />
