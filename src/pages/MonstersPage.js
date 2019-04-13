@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Dropdown, DropdownButton, Button, Pagination } from 'react-bootstrap';
+import { Dropdown, DropdownButton, Button, Pagination, Row, Col } from 'react-bootstrap';
 import DefaultTemplate from '../templates/DefaultTemplate';
 
 import queryString from 'query-string';
@@ -25,12 +25,20 @@ export default class MonstersPage extends React.Component {
             query: (typeof this.props.location.search === 'undefined' ) ? {} : queryString.parse(this.props.location.search)
         };
 
+        this.columns = [
+            {lg: 4, xs: 8}, // Name
+            {lg: 3, xs: 4}, // Race
+            
+            {lg: 1, xs: 3}, //CR
+            {lg: 3, xs: 5}, //AC
+            {lg: 1, xs: 4} // HP
+        ];
         this.headers = [
-            {name: 'name', title:'Creatue Name', width:'', md: "auto", xs: "auto"},
-            {name: 'race', title:'Race', width:'135', md: "auto", xs: "2"},
-            {name: 'cr', title:'CR', width:'90', md: "2", xs: "2"},
-            {name: 'ac', title:'AC', width:'260', md: "3", xs: "3"},
-            {name: 'hp', title:'HP', width:'90', md: "2", xs: "2"},
+            {name: 'name', title:'Creatue Name', width:''},
+            {name: 'race', title:'Type', width:'135'},
+            {name: 'cr', title:'CR', width:'90'},
+            {name: 'ac', title:'AC', width:'260'},
+            {name: 'hp', title:'HP', width:'90'},
         ];
         
         
@@ -54,65 +62,65 @@ export default class MonstersPage extends React.Component {
 
         return (<DefaultTemplate>
             
-            <Table striped bordered hover size="sm" responsive="sm">
-                <thead>
-                    <tr>
-                        {this.renderHeaders()}
-                        <th width="30"></th>
-                    </tr>
-                    <tr>
-                        <th>
-                            
-                        </th>
-                        <th>
-                            <DropdownButton title={this.state.MonsterDataHandler.getFilterRace()} className="block" size="sm">
-                                {this.races.map(Race =>
-                                    <Dropdown.Item key={Race} onClick={this.handleQueryLinkClick} data-filter-race={Race}>{Race}</Dropdown.Item>
-                                )}
-                            </DropdownButton>
-                        </th>
-                        <th>
-                            <DropdownButton title={this.state.MonsterDataHandler.getFilterCR()} className="block" size="sm">
-                                <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("all")}> - all cr's - </Dropdown.Item>
-                                <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("0-1")}>0-1</Dropdown.Item>
-                                <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("2")}>2</Dropdown.Item>
-                                <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("3")}>3</Dropdown.Item>
-                                <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("4")}>4</Dropdown.Item>
-                                <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("5")}>5</Dropdown.Item>
-                                <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("6-10")}>6-10</Dropdown.Item>
-                                <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("11-15")}>11-15</Dropdown.Item>
-                                <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("16-20")}>16-20</Dropdown.Item>
-                                <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("21-25")}>21-25</Dropdown.Item>
-                                <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("26-30")}>26-30</Dropdown.Item>
-                                <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("31-10000")}>31+</Dropdown.Item>
-                            </DropdownButton>
-                        </th>
-
-                        <th>
-                            {this.state.MonsterDataHandler.isFiltered() &&
-                                <Button onClick={this.handleClearFiltersLinkClick.bind(this)} variant="light" size="sm">&#10008; Clear Filters</Button>
-                            }
-                        </th>
-                        
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Row>
+                <Col lg="3">
+                    <p>
+                        <DropdownButton title={"Filter by Type: " + this.state.MonsterDataHandler.getFilterRace()} className="block">
+                            {this.races.map(Race =>
+                                <Dropdown.Item key={Race} onClick={this.handleQueryLinkClick} data-filter-race={Race}>Filter Type: {Race}</Dropdown.Item>
+                            )}
+                        </DropdownButton>
+                    </p>
+                    <p>
+                        <DropdownButton title={"Filter by CR: " + this.state.MonsterDataHandler.getFilterCR()} className="block" size="sm">
+                            <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("all")}> - all CR's - </Dropdown.Item>
+                            <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("0-1")}>CR 0-1</Dropdown.Item>
+                            <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("2")}>CR 2</Dropdown.Item>
+                            <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("3")}>CR 3</Dropdown.Item>
+                            <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("4")}>CR 4</Dropdown.Item>
+                            <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("5")}>CR 5</Dropdown.Item>
+                            <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("6-10")}>CR 6-10</Dropdown.Item>
+                            <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("11-15")}>CR 11-15</Dropdown.Item>
+                            <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("16-20")}>CR 16-20</Dropdown.Item>
+                            <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("21-25")}>CR 21-25</Dropdown.Item>
+                            <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("26-30")}>CR 26-30</Dropdown.Item>
+                            <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("31-10000")}>CR 31+</Dropdown.Item>
+                        </DropdownButton>
+                    </p>
+                    
+                    {this.state.MonsterDataHandler.isFiltered() &&
+                        <p>
+                            <Button onClick={this.handleClearFiltersLinkClick.bind(this)} variant="light" size="sm">&#10008; Clear Filters</Button>
+                        </p>
+                    }
+                </Col>
+                <Col lg="9">
+                    <Row className="monster-row">
+                        {this.renderHeaderCols()}
+                    </Row>
                     {this.state.MonsterDataHandler.pageData().map(Monster => 
-                        <tr key={Monster.id}>
-                            <td><a href={("#/monster/" + Monster.id)}>{Monster.name}</a></td>
-                            <td>{Monster.race}</td>
-                            <td className="text-center">{Monster.cr}</td>
-                            <td>{Monster.armorClass}</td>
-                            <td className="text-center">{Monster.hitPoints.average}</td>
-                            <td>
-                                <Button onClick={this.addToEncounter.bind(this, Monster)} size="sm" variant="success">+</Button>
-                            </td>
-                        </tr>
+                        <Row key={Monster.id} className="monster-row">
+                            <Col {...this.columns[0]} className="border">
+                                <Button onClick={this.addToEncounter.bind(this, Monster)} size="sm" variant="success" className="btn-margin-right">+</Button>
+                                <a href={("#/monster/" + Monster.id)}>{Monster.name}</a>
+                            </Col>
+                            <Col {...this.columns[1]} className="border">
+                                {Monster.race}
+                            </Col>
+                            <Col {...this.columns[2]} className="border text-center">
+                                <span className="text-muted d-lg-none">CR:</span> {Monster.cr}
+                            </Col>
+                            <Col {...this.columns[3]} className="border">
+                                <span className="text-muted d-lg-none">AC:</span> {Monster.armorClass}
+                            </Col>
+                            <Col {...this.columns[4]} className="border text-center">
+                                <span className="text-muted d-lg-none">HP:</span> {Monster.hitPoints.average}
+                            </Col>
+                        </Row>
                     )}
-                </tbody>
-            </Table>
+                </Col>
+            </Row>
+
             <Pagination className="justify-content-center" size="md">{this.renderPaginationItems()}</Pagination>
             
         </DefaultTemplate>);
@@ -130,19 +138,19 @@ export default class MonstersPage extends React.Component {
     return items;
   }
   
-  renderHeaders(){
+    renderHeaderCols(){
         var headers = [];
-        this.headers.map(field => {
+        this.headers.map((field, idx) => {
             let className = 'none';
             if(field.name === this.state.MonsterDataHandler.getSortField()){
                 className = this.state.MonsterDataHandler.getSortDir() > 0 ? 'asc' : 'desc';
             }
             headers.push(
-                <th key={field.name} width={field.width}>
+                <Col key={field.name} className="border" {...this.columns[idx]}>
                     <Button onClick={this.handleSortLinkClick} data-sort-field={field.name} size="sm" variant="link" block className={className}>
                         {field.title}
                     </Button>
-                </th>
+                </Col>
                     );
             return true;
         });
