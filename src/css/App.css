@@ -25,3 +25,8 @@
 .btn-margin-right {
     margin-right: 1em;
 }
+
+.page-item {
+    min-width: 44px;
+    text-align: center;
+}

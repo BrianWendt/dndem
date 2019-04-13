@@ -24,3 +24,5 @@ const routing = (
 ReactDOM.render(routing, document.getElementById('root'));
 
 serviceWorker.unregister();
+
+window.$ = window.jQuery = require('jquery')

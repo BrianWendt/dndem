@@ -1,13 +1,13 @@
 {
-  "main.css": "/dndem/static/css/main.09dd4a43.chunk.css",
-  "main.js": "/dndem/static/js/main.67179d9d.chunk.js",
-  "main.js.map": "/dndem/static/js/main.67179d9d.chunk.js.map",
+  "main.css": "/dndem/static/css/main.3299bbe1.chunk.css",
+  "main.js": "/dndem/static/js/main.2739ef80.chunk.js",
+  "main.js.map": "/dndem/static/js/main.2739ef80.chunk.js.map",
   "runtime~main.js": "/dndem/static/js/runtime~main.dc3153e4.js",
   "runtime~main.js.map": "/dndem/static/js/runtime~main.dc3153e4.js.map",
-  "static/js/2.cc4397e3.chunk.js": "/dndem/static/js/2.cc4397e3.chunk.js",
-  "static/js/2.cc4397e3.chunk.js.map": "/dndem/static/js/2.cc4397e3.chunk.js.map",
+  "static/js/2.eaa9574f.chunk.js": "/dndem/static/js/2.eaa9574f.chunk.js",
+  "static/js/2.eaa9574f.chunk.js.map": "/dndem/static/js/2.eaa9574f.chunk.js.map",
   "index.html": "/dndem/index.html",
-  "precache-manifest.364a9ed124d215784e0e729106ef7ebc.js": "/dndem/precache-manifest.364a9ed124d215784e0e729106ef7ebc.js",
+  "precache-manifest.99a1d71fd0177e1656c444fff388ae0a.js": "/dndem/precache-manifest.99a1d71fd0177e1656c444fff388ae0a.js",
   "service-worker.js": "/dndem/service-worker.js",
-  "static/css/main.09dd4a43.chunk.css.map": "/dndem/static/css/main.09dd4a43.chunk.css.map"
+  "static/css/main.3299bbe1.chunk.css.map": "/dndem/static/css/main.3299bbe1.chunk.css.map"
 }

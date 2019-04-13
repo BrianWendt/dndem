@@ -1,6 +1,8 @@
 import React from 'react';
-import { Dropdown, DropdownButton, Button, Pagination, Row, Col } from 'react-bootstrap';
+import { Dropdown, DropdownButton, Button, Row, Col, Pagination } from 'react-bootstrap';
+import $ from 'jquery';
 import DefaultTemplate from '../templates/DefaultTemplate';
+import PaginationItems from '../components/PaginationItems';
 
 import queryString from 'query-string';
 
@@ -56,21 +58,20 @@ export default class MonstersPage extends React.Component {
         this.state.MonsterDataHandler.sortBy(this.state.query.sortField, this.state.query.sortDir);
         this.state.MonsterDataHandler.filterByCR(this.state.query.filterCr);
         this.state.MonsterDataHandler.filterByRace(this.state.query.filterRace);
-        this.state.MonsterDataHandler.setPageNumber(this.state.query.page)
+        this.state.MonsterDataHandler.setPageNumber(this.state.query.page || 1)
 
         return (<DefaultTemplate>
-
             <Row>
                 <Col lg="3">
-                    <p>
+                    <div className="form-group">
                         <DropdownButton title={"Filter by Type: " + this.state.MonsterDataHandler.getFilterRace()} className="block">
                             {this.races.map(Race =>
                                 <Dropdown.Item key={Race} onClick={this.handleQueryLinkClick} data-filter-race={Race}>Filter Type: {Race}</Dropdown.Item>
                             )}
                         </DropdownButton>
-                    </p>
-                    <p>
-                        <DropdownButton title={"Filter by CR: " + this.state.MonsterDataHandler.getFilterCR()} className="block" size="sm">
+                    </div>
+                    <div className="form-group">
+                        <DropdownButton title={"Filter by CR: " + this.state.MonsterDataHandler.getFilterCR()} className="block">
                             <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("all")}> - all CR's - </Dropdown.Item>
                             <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("0-1")}>CR 0-1</Dropdown.Item>
                             <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("2")}>CR 2</Dropdown.Item>
@@ -84,12 +85,12 @@ export default class MonstersPage extends React.Component {
                             <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("26-30")}>CR 26-30</Dropdown.Item>
                             <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("31-10000")}>CR 31+</Dropdown.Item>
                         </DropdownButton>
-                    </p>
+                    </div>
 
                     {this.state.MonsterDataHandler.isFiltered() &&
-                        <p>
+                        <div className="form-group">
                             <Button onClick={this.handleClearFiltersLinkClick.bind(this)} variant="light" size="sm">&#10008; Clear Filters</Button>
-                        </p>
+                        </div>
                     }
                 </Col>
                 <Col lg="9">
@@ -116,10 +117,14 @@ export default class MonstersPage extends React.Component {
                             </Col>
                         </Row>
                     )}
+
+                    <Pagination className="justify-content-center mt-3" size="md">
+                        <PaginationItems itemCount={this.state.MonsterDataHandler.pages()} activeItem={this.state.MonsterDataHandler.getPageNumber()} itemOnClick={this.handlePaginationLinkClick} />
+                    </Pagination>
                 </Col>
             </Row>
 
-            <Pagination className="justify-content-center" size="md">{this.renderPaginationItems()}</Pagination>
+
 
         </DefaultTemplate>);
   }
@@ -173,7 +178,7 @@ export default class MonstersPage extends React.Component {
   }
 
   handlePaginationLinkClick(e){
-      var data = Object.assign({}, e.target.dataset);
+      var data = Object.assign({}, e.currentTarget.dataset);
       this.query(data, false, data.page);
   }
 
@@ -196,6 +201,7 @@ export default class MonstersPage extends React.Component {
       query.page = page;
       const href = this.props.location.pathname + '?' + queryString.stringify(query);
       this.props.history.push(href);
+      $("html, body").animate({ scrollTop: 0 }, "fast");
       this.setState({query: query})
   }
 };
