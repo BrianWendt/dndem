@@ -63,3 +63,4 @@ typings/
 # batch scripts
 *.bat
 nbproject
+package-lock.json
