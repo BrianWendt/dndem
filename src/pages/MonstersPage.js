@@ -3,6 +3,7 @@ import { Dropdown, DropdownButton, Button, Row, Col, Pagination } from 'react-bo
 import $ from 'jquery';
 import DefaultTemplate from '../templates/DefaultTemplate';
 import PaginationItems from '../components/PaginationItems';
+import PaginationNav from '../components/PaginationNav';
 
 import queryString from 'query-string';
 
@@ -17,7 +18,7 @@ export default class MonstersPage extends React.Component {
         this.EncounterDataHandler = new EncounterDataHandler('encounter');
         this.handleQueryLinkClick = this.handleQueryLinkClick.bind(this);
         this.handleSortLinkClick = this.handleSortLinkClick.bind(this);
-        this.handlePaginationLinkClick = this.handlePaginationLinkClick.bind(this);
+        this.handlePaginationNavEvent = this.handlePaginationNavEvent.bind(this);
 
         this.state = {
             MonsterDataHandler: new MonsterDataHandler(),
@@ -62,7 +63,7 @@ export default class MonstersPage extends React.Component {
 
         return (<DefaultTemplate>
             <Row>
-                <Col lg="3">
+                <Col lg="2">
                     <div className="form-group">
                         <DropdownButton title={"Filter by Type: " + this.state.MonsterDataHandler.getFilterRace()} className="block">
                             {this.races.map(Race =>
@@ -93,53 +94,30 @@ export default class MonstersPage extends React.Component {
                         </div>
                     }
                 </Col>
-                <Col lg="9">
+                <Col lg="10">
                     <Row className="monster-row">
                         {this.renderHeaderCols()}
                     </Row>
                     {this.state.MonsterDataHandler.pageData().map(Monster =>
                         <Row key={Monster.id} className="monster-row">
-                            <Col {...this.columns[0]} className="border">
+                            <Col {...this.columns[0]} className="border p-1">
                                 <Button onClick={this.addToEncounter.bind(this, Monster)} size="sm" variant="success" className="btn-margin-right">+</Button>
                                 <a href={("#/monster/" + Monster.id)}>{Monster.name}</a>
                             </Col>
-                            <Col {...this.columns[1]} className="border">
-                                {Monster.race}
-                            </Col>
-                            <Col {...this.columns[2]} className="border text-center">
-                                <span className="text-muted d-lg-none">CR:</span> {Monster.cr}
-                            </Col>
-                            <Col {...this.columns[3]} className="border">
-                                <span className="text-muted d-lg-none">AC:</span> {Monster.armorClass}
-                            </Col>
-                            <Col {...this.columns[4]} className="border text-center">
-                                <span className="text-muted d-lg-none">HP:</span> {Monster.hitPoints.average}
-                            </Col>
+                            <Col {...this.columns[1]} className="border p-1"> {Monster.race} </Col>
+                            <Col {...this.columns[2]} className="border text-center p-1"> <i className="text-muted d-lg-none">CR:</i> {Monster.cr} </Col>
+                            <Col {...this.columns[3]} className="border p-1"> <i className="text-muted d-lg-none">AC:</i> {Monster.armorClass} </Col>
+                            <Col {...this.columns[4]} className="border text-center p-1"> <i className="text-muted d-lg-none">HP:</i> {Monster.hitPoints.average}</Col>
                         </Row>
                     )}
-
-                    <Pagination className="justify-content-center mt-3" size="md">
-                        <PaginationItems itemCount={this.state.MonsterDataHandler.pages()} activeItem={this.state.MonsterDataHandler.getPageNumber()} itemOnClick={this.handlePaginationLinkClick} />
-                    </Pagination>
+                    <div className="mt-3">
+                        <PaginationNav pageCount={this.state.MonsterDataHandler.pages()} pageActive={this.state.MonsterDataHandler.getPageNumber()} pageChange={this.handlePaginationNavEvent} />
+                    </div>
                 </Col>
             </Row>
 
-
-
         </DefaultTemplate>);
-  }
-
-  renderPaginationItems(){
-    let items = [];
-    for (let number = 1; number <= this.state.MonsterDataHandler.pages(); number++) {
-        items.push(
-            <Pagination.Item key={number} active={number === this.state.MonsterDataHandler.getPageNumber()} onClick={this.handlePaginationLinkClick} data-page={number}>
-                {number}
-            </Pagination.Item>,
-        );
     }
-    return items;
-  }
 
     renderHeaderCols(){
         var headers = [];
@@ -155,53 +133,52 @@ export default class MonstersPage extends React.Component {
                         {field.title}
                     </Button>
                 </Col>
-                    );
+            );
             return true;
         });
 
         return headers;
-  }
+    }
 
-  addToEncounter(Monster){
-      this.EncounterDataHandler.addMonster(Monster);
-      alert(Monster.name + " added to encounter.")
-  }
+    addToEncounter(Monster){
+        this.EncounterDataHandler.addMonster(Monster);
+        alert(Monster.name + " added to encounter.")
+    }
 
-  handleQueryLinkClick(e){
-      this.query(Object.assign({}, e.target.dataset));
-  }
+    handleQueryLinkClick(e){
+        this.query(Object.assign({}, e.target.dataset));
+    }
 
-  handleSortLinkClick(e){
-      var data = Object.assign({}, e.target.dataset);
-      data.sortDir = this.state.MonsterDataHandler.sortDirSwitch(data.sortField);
-      this.query(data);
-  }
+    handleSortLinkClick(e){
+        var data = Object.assign({}, e.target.dataset);
+        data.sortDir = this.state.MonsterDataHandler.sortDirSwitch(data.sortField);
+        this.query(data);
+    }
 
-  handlePaginationLinkClick(e){
-      var data = Object.assign({}, e.currentTarget.dataset);
-      this.query(data, false, data.page);
-  }
+    handlePaginationNavEvent(e){
+        this.query({}, false, e.currentTarget.value);
+    }
 
-  handleClearFiltersLinkClick(){
-      this.query({
-          filterName: '',
-          filterRace: 'all',
-          filterCr: 'all'
-      }, true);
-  }
+    handleClearFiltersLinkClick(){
+        this.query({
+            filterName: '',
+            filterRace: 'all',
+            filterCr: 'all'
+        }, true);
+    }
 
-  query(data, clear = false, page = 1){
-      var query;
-      if(clear){
-        query = data;
-      } else {
-        const queryClone = Object.assign({}, this.state.query); //clone
-        query = Object.assign(queryClone, data);
-      }
-      query.page = page;
-      const href = this.props.location.pathname + '?' + queryString.stringify(query);
-      this.props.history.push(href);
-      $("html, body").animate({ scrollTop: 0 }, "fast");
-      this.setState({query: query})
-  }
+    query(data, clear = false, page = 1){
+        var query;
+        if(clear){
+            query = data;
+        } else {
+            const queryClone = Object.assign({}, this.state.query); //clone
+            query = Object.assign(queryClone, data);
+        }
+        query.page = page;
+        const href = this.props.location.pathname + '?' + queryString.stringify(query);
+        this.props.history.push(href);
+        $("html, body").animate({ scrollTop: 0 }, "fast");
+        this.setState({query: query})
+    }
 };

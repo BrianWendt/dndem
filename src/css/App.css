@@ -30,3 +30,11 @@
     min-width: 44px;
     text-align: center;
 }
+
+.pagination-nav {
+
+}
+
+.pagination-nav .btn {
+    width: 120px;
+}
