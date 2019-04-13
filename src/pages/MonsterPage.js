@@ -19,22 +19,20 @@ export default class MonsterPage extends React.Component {
     }
 
     render(){
-        
-        
         const Monster = this.Monster;
-        
+
         return (Monster === false) ? false : (
                 <DefaultTemplate>
                     {this.props.history.length > 1 &&
-                            <p><Button onClick={this.goBack.bind(this)} variant="secondary">&#10852; Back</Button></p>
+                            <p><Button onClick={this.props.history.goBack()} variant="secondary">&#10852; Back</Button></p>
                     }
                     <h1>{Monster.name}</h1>
                     <MonsterCard Monster={Monster} />
                 </DefaultTemplate>
               );
     }
-    
+
     goBack(){
-        this.props.history.goBack();
+
     }
 };

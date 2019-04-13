@@ -11,15 +11,12 @@ import EncounterDataHandler from '../data/EncounterDataHandler';
 export default class MonstersPage extends React.Component {
     constructor(props, context) {
         super(props, context);
-        
         document.title = 'DnDEM - Monsters';
-
         this.EncounterDataHandler = new EncounterDataHandler('encounter');
-        
         this.handleQueryLinkClick = this.handleQueryLinkClick.bind(this);
         this.handleSortLinkClick = this.handleSortLinkClick.bind(this);
         this.handlePaginationLinkClick = this.handlePaginationLinkClick.bind(this);
-        
+
         this.state = {
             MonsterDataHandler: new MonsterDataHandler(),
             query: (typeof this.props.location.search === 'undefined' ) ? {} : queryString.parse(this.props.location.search)
@@ -28,11 +25,12 @@ export default class MonstersPage extends React.Component {
         this.columns = [
             {lg: 4, xs: 8}, // Name
             {lg: 3, xs: 4}, // Race
-            
+
             {lg: 1, xs: 3}, //CR
             {lg: 3, xs: 5}, //AC
             {lg: 1, xs: 4} // HP
         ];
+
         this.headers = [
             {name: 'name', title:'Creatue Name', width:''},
             {name: 'race', title:'Type', width:'135'},
@@ -40,28 +38,28 @@ export default class MonstersPage extends React.Component {
             {name: 'ac', title:'AC', width:'260'},
             {name: 'hp', title:'HP', width:'90'},
         ];
-        
-        
+
         this.races = [];
+
         this.state.MonsterDataHandler._data.map(function(Monster){
             if(this.races.indexOf(Monster.race) < 0){
                 this.races.push(Monster.race)
             }
             return true;
         }, this);
+
         this.races.sort();
         this.races.unshift('all');
     }
-    
+
     render() {
-        
         this.state.MonsterDataHandler.sortBy(this.state.query.sortField, this.state.query.sortDir);
         this.state.MonsterDataHandler.filterByCR(this.state.query.filterCr);
         this.state.MonsterDataHandler.filterByRace(this.state.query.filterRace);
         this.state.MonsterDataHandler.setPageNumber(this.state.query.page)
 
         return (<DefaultTemplate>
-            
+
             <Row>
                 <Col lg="3">
                     <p>
@@ -87,7 +85,7 @@ export default class MonstersPage extends React.Component {
                             <Dropdown.Item onClick={this.handleQueryLinkClick} data-filter-cr={("31-10000")}>CR 31+</Dropdown.Item>
                         </DropdownButton>
                     </p>
-                    
+
                     {this.state.MonsterDataHandler.isFiltered() &&
                         <p>
                             <Button onClick={this.handleClearFiltersLinkClick.bind(this)} variant="light" size="sm">&#10008; Clear Filters</Button>
@@ -98,7 +96,7 @@ export default class MonstersPage extends React.Component {
                     <Row className="monster-row">
                         {this.renderHeaderCols()}
                     </Row>
-                    {this.state.MonsterDataHandler.pageData().map(Monster => 
+                    {this.state.MonsterDataHandler.pageData().map(Monster =>
                         <Row key={Monster.id} className="monster-row">
                             <Col {...this.columns[0]} className="border">
                                 <Button onClick={this.addToEncounter.bind(this, Monster)} size="sm" variant="success" className="btn-margin-right">+</Button>
@@ -122,10 +120,10 @@ export default class MonstersPage extends React.Component {
             </Row>
 
             <Pagination className="justify-content-center" size="md">{this.renderPaginationItems()}</Pagination>
-            
+
         </DefaultTemplate>);
   }
-  
+
   renderPaginationItems(){
     let items = [];
     for (let number = 1; number <= this.state.MonsterDataHandler.pages(); number++) {
@@ -137,9 +135,10 @@ export default class MonstersPage extends React.Component {
     }
     return items;
   }
-  
+
     renderHeaderCols(){
         var headers = [];
+
         this.headers.map((field, idx) => {
             let className = 'none';
             if(field.name === this.state.MonsterDataHandler.getSortField()){
@@ -154,29 +153,30 @@ export default class MonstersPage extends React.Component {
                     );
             return true;
         });
+
         return headers;
   }
-  
+
   addToEncounter(Monster){
       this.EncounterDataHandler.addMonster(Monster);
       alert(Monster.name + " added to encounter.")
   }
-  
+
   handleQueryLinkClick(e){
       this.query(Object.assign({}, e.target.dataset));
   }
-  
+
   handleSortLinkClick(e){
       var data = Object.assign({}, e.target.dataset);
       data.sortDir = this.state.MonsterDataHandler.sortDirSwitch(data.sortField);
       this.query(data);
   }
-  
+
   handlePaginationLinkClick(e){
       var data = Object.assign({}, e.target.dataset);
       this.query(data, false, data.page);
   }
-  
+
   handleClearFiltersLinkClick(){
       this.query({
           filterName: '',
@@ -184,7 +184,7 @@ export default class MonstersPage extends React.Component {
           filterCr: 'all'
       }, true);
   }
-  
+
   query(data, clear = false, page = 1){
       var query;
       if(clear){
