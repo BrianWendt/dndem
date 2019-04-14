@@ -1,8 +1,7 @@
 import React from 'react';
-import { Dropdown, DropdownButton, Button, Row, Col, Pagination } from 'react-bootstrap';
+import { Dropdown, DropdownButton, Button, Row, Col } from 'react-bootstrap';
 import $ from 'jquery';
 import DefaultTemplate from '../templates/DefaultTemplate';
-import PaginationItems from '../components/PaginationItems';
 import PaginationNav from '../components/PaginationNav';
 
 import queryString from 'query-string';
@@ -95,14 +94,14 @@ export default class MonstersPage extends React.Component {
                     }
                 </Col>
                 <Col lg="10">
-                    <Row className="monster-row">
+                    <Row className="monster-row header-row">
                         {this.renderHeaderCols()}
                     </Row>
                     {this.state.MonsterDataHandler.pageData().map(Monster =>
                         <Row key={Monster.id} className="monster-row">
                             <Col {...this.columns[0]} className="border p-1">
                                 <Button onClick={this.addToEncounter.bind(this, Monster)} size="sm" variant="success" className="btn-margin-right">+</Button>
-                                <a href={("#/monster/" + Monster.id)}>{Monster.name}</a>
+                                <a href={("#/monster/" + Monster.id)} className="monster-name">{Monster.name}</a>
                             </Col>
                             <Col {...this.columns[1]} className="border p-1"> {Monster.race} </Col>
                             <Col {...this.columns[2]} className="border text-center p-1"> <i className="text-muted d-lg-none">CR:</i> {Monster.cr} </Col>
@@ -141,7 +140,18 @@ export default class MonstersPage extends React.Component {
     }
 
     addToEncounter(Monster){
-        this.EncounterDataHandler.addMonster(Monster);
+        var Creature = {
+            key: '',
+            name: Monster.name,
+            max_hp: Monster.hitPoints.average,
+            hp: Monster.hitPoints.average,
+            init_mod: Monster.initiativeMod,
+            init: 0,
+            href: '#/monster/' + Monster.id,
+            ac: Monster.armorClass,
+            note: ''
+        };
+        this.EncounterDataHandler.setCreature(Creature);
         alert(Monster.name + " added to encounter.")
     }
 
