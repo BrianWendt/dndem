@@ -89,7 +89,7 @@ export default class MonstersPage extends React.Component {
                     </div>
 
                     {this.state.MonsterDataHandler.isFiltered() &&
-                        <div className="form-group">
+                        <div className="form-group text-center">
                             <Button onClick={this.handleClearFiltersLinkClick.bind(this)} variant="light" size="sm">&#10008; Clear Filters</Button>
                         </div>
                     }
@@ -128,7 +128,7 @@ export default class MonstersPage extends React.Component {
                 className = this.state.MonsterDataHandler.getSortDir() > 0 ? 'asc' : 'desc';
             }
             headers.push(
-                <Col key={field.name} className="border" {...this.columns[idx]}>
+                <Col key={field.name} className="border p-1" {...this.columns[idx]}>
                     <Button onClick={this.handleSortLinkClick} data-sort-field={field.name} size="sm" variant="link" block className={className}>
                         {field.title}
                     </Button>

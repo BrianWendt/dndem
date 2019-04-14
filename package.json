@@ -1,6 +1,7 @@
 {
   "name": "dndem",
-  "version": "0.1.0",
+  "description": "DnDEM: the D&D Encounter Manager",
+  "version": "0.1.1",
   "homepage": "https://brianwendt.github.io/dndem/",
   "private": true,
   "dependencies": {
