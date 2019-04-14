@@ -6,6 +6,8 @@
     font-weight: 700;
 }
 
+body { background: #fafafa; }
+
 .default_header {
     margin-bottom: 1rem;
 }
@@ -20,6 +22,9 @@
 .asc::after { content: ' ▼'; }
 .desc::after { content: ' ▲'; }
 
+.monster-row .border {
+    background-color: #fff;
+}
 .header-row, .header-row .btn {
     font-weight: bold;
     font-size: 1.01em;
