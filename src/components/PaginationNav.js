@@ -16,7 +16,7 @@ export default class PaginationNav extends React.Component {
                         <Button variant="outline-secondary" value={pageActive - 1} onClick={pageChange}>Prev</Button>
                     </InputGroup.Prepend>
                     }
-                    <Form.Control as="select" defaultValue={pageActive} value={pageActive} onChange={pageChange}>
+                    <Form.Control as="select" value={pageActive} onChange={pageChange}>
                         {this.generateOptions()}
                     </Form.Control>
                     {pageActive < pageCount &&
@@ -30,10 +30,10 @@ export default class PaginationNav extends React.Component {
     }
 
     generateOptions(){
-        const {pageChange, pageCount, pageActive } = this.props;
+        const { pageCount, pageActive } = this.props;
         let items = [];
         for (let number = 1; number <= pageCount; number++) {
-            items.push(<option key={number} active={number === pageActive} value={number}>Page {number}</option>);
+            items.push(<option key={number} value={number}>Page {number}</option>);
         }
         return items;
     }
