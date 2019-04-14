@@ -12,7 +12,7 @@ export default class IndexPage extends Component {
                 <DefaultTemplate>
                     <Jumbotron fluid>
                         <Container>
-                            <h1><small>DnDEM:</small> the D&D Encounter Manager</h1>
+                            <h1><small>DnDEM:</small> D&D Encounter Manager</h1>
                             <p className="lead">A tool for DMs to manage initiative and HP easily from their laptop or other device.</p>
                         </Container>
 
