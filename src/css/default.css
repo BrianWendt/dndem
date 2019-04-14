@@ -19,8 +19,8 @@ body { background: #fafafa; }
 
 .btn { text-decoration: none !important; }
 
-.asc::after { content: ' ▼'; }
-.desc::after { content: ' ▲'; }
+.asc::after { content: ' ▲'; }
+.desc::after { content: ' ▼'; }
 
 .monster-row .border {
     background-color: #fff;
