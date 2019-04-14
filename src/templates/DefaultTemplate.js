@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 
-import '../css/bootstrap.min.css';
+import '../css/default.css';
 import '../css/App.css';
 
 export default class DefaultTemplate extends React.Component {
@@ -9,9 +9,9 @@ export default class DefaultTemplate extends React.Component {
         return (
                 <div id="app">
                     <header className="default_header">
-                        <Navbar bg="light" variant="light" expand="sm" >
+                        <Navbar bg="primary" variant="dark" expand="sm">
                             <Container>
-                                <Navbar.Brand href="#/">DnDEM</Navbar.Brand>
+                                <Navbar.Brand href="#/" className="font-tinos-700">DnDEM</Navbar.Brand>
                                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
                                 <Navbar.Collapse id="basic-navbar-nav">
