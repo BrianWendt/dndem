@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
-
-import EncounterDataHandler from '../data/EncounterDataHandler';
 
 import DefaultTemplate from '../templates/DefaultTemplate';
 
