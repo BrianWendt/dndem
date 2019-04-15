@@ -1,11 +1,12 @@
 import React from 'react';
-import { Col, Row, Form, InputGroup, Button, ButtonGroup, Modal } from 'react-bootstrap';
+import { Col, Row, Form, InputGroup, Button, ButtonGroup, Modal, Card } from 'react-bootstrap';
 
 import DefaultTemplate from '../templates/DefaultTemplate';
 
 import EncounterDataHandler from '../data/EncounterDataHandler';
 import {mod} from '../data/mod';
 import FileUtility from '../data/FileUtility';
+import slugify from '../data/slugify';
 
 export default class EncounterPage extends React.Component {
     constructor(props, context) {
@@ -15,7 +16,8 @@ export default class EncounterPage extends React.Component {
         this.EncounterDataHandler = new EncounterDataHandler('encounter');
         this.FileUtility = new FileUtility();
 
-        this.handleUpdateValue = this.handleUpdateValue.bind(this);
+        this.handleUpdateEncounterValue = this.handleUpdateEncountereValue.bind(this);
+        this.handleUpdateCreatureValue = this.handleUpdateCreatureValue.bind(this);
         this.handleRollInit = this.handleRollInit.bind(this);
         this.handleAddCreature = this.handleAddCreature.bind(this);
         this.handleCreatureSubmit = this.handleCreatureSubmit.bind(this);
@@ -59,7 +61,7 @@ export default class EncounterPage extends React.Component {
                                     <InputGroup.Prepend>
                                         <Button onClick={this.handleEditCreature} data-key={Creature.key} variant="outline-success">&#x270E;</Button>
                                     </InputGroup.Prepend>
-                                    <Form.Control name="name" value={Creature.name} placeholder="Creature Name" onChange={this.handleUpdateValue} data-key={Creature.key} />
+                                    <Form.Control name="name" value={Creature.name} placeholder="Creature Name" onChange={this.handleUpdateCreatureValue} data-key={Creature.key} />
 
                                     {Creature.href.length > 0 &&
                                         <InputGroup.Append>
@@ -70,7 +72,7 @@ export default class EncounterPage extends React.Component {
                             </Col>
                             <Col xs={4} lg={2} className="border p-1 text-center">
                                 <InputGroup className="">
-                                    <Form.Control name="hp" value={Creature.hp} onChange={this.handleUpdateValue} data-key={Creature.key} />
+                                    <Form.Control name="hp" value={Creature.hp} onChange={this.handleUpdateCreatureValue} data-key={Creature.key} />
                                     <InputGroup.Text>/ {Creature.max_hp}</InputGroup.Text>
                                 </InputGroup>
                             </Col>
@@ -79,7 +81,7 @@ export default class EncounterPage extends React.Component {
                             </Col>
                             <Col xs={4} lg={1} className="border p-1 text-center">
                                 <InputGroup className="">
-                                    <Form.Control name="init" value={Creature.init} placeholder={"d20" + mod(Creature.init_mod)} onChange={this.handleUpdateValue} data-key={Creature.key}/>
+                                    <Form.Control name="init" value={Creature.init} placeholder={"d20" + mod(Creature.init_mod)} onChange={this.handleUpdateCreatureValue} data-key={Creature.key}/>
                                     <InputGroup.Append>
                                         <Button onClick={this.handleRollInit} data-key={Creature.key} title={"d20" + mod(Creature.init_mod)}>&#8634;</Button>
                                     </InputGroup.Append>
@@ -89,6 +91,24 @@ export default class EncounterPage extends React.Component {
                     )}
                 </div>
             }
+
+            <Card className="mt-3">
+                <Card.Header>Encounter Information</Card.Header>
+                <Card.Body>
+                    <Form.Group as={Row}>
+                        <Form.Label column lg={2}>Encounter Name</Form.Label>
+                        <Col lg={10}>
+                            <Form.Control type="text" onChange={this.handleUpdateEncounterValue} name="name" value={this.state.Encounter.name} placeholder="Tavern Fight" />
+                        </Col>
+                    </Form.Group>
+                    <Form.Group as={Row}>
+                        <Form.Label column lg={2}>Notes</Form.Label>
+                        <Col lg={10}>
+                            <Form.Control as="textarea" onChange={this.handleUpdateEncounterValue} name="notes" value={this.state.Encounter.notes} />
+                        </Col>
+                    </Form.Group>
+                </Card.Body>
+            </Card>
 
             {this.state.Encounter.creatures.length < 1 &&
                 <p>No creatures in encounter yet.</p>
@@ -155,14 +175,26 @@ export default class EncounterPage extends React.Component {
                     <hr/>
 
                     <Form.Group>
-                        <Button href={this.state.downloadURL} download="encounter.dndem" block>Download Encounter</Button>
+                        <Button href={this.state.downloadURL} download={this.encounterSlug() + ".dndem"} block>Download Encounter</Button>
                     </Form.Group>
                 </Modal.Body>
             </Modal>
         </DefaultTemplate>)
     }
 
-    handleUpdateValue(e){
+    encounterSlug(){
+        const name = this.state.Encounter.name || "encounter";
+        return slugify(name);
+    }
+
+    handleUpdateEncountereValue(e){
+        const field = e.target.name;
+        const value = e.target.value;
+        this.EncounterDataHandler.updateEncounterField(field, value);
+        this.updateEncounterState();
+    }
+
+    handleUpdateCreatureValue(e){
         const key = e.target.dataset.key;
         const field = e.target.name;
         const value = e.target.value;
