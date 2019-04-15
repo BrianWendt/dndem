@@ -7,6 +7,7 @@ import EncounterPage from './pages/EncounterPage';
 import IndexPage from './pages/IndexPage';
 import MonsterPage from './pages/MonsterPage';
 import MonstersPage from './pages/MonstersPage';
+import ErrorPage from './pages/ErrorPage';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -17,6 +18,7 @@ const routing = (
                 <Route path="/monsters/:query?" component={MonstersPage} />
                 <Route path="/monster/:id" component={MonsterPage} />
                 <Route path="/encounter/" component={EncounterPage} />
+                <Route path="/error/:code" component={ErrorPage} />
             </div>
         </Router>
         )
