@@ -1,4 +1,4 @@
-# DnDEM: the D&D Encounter Manager
+# DnDEM: D&D Encounter Manager
 #### A tool for DMs to manage initiative and HP easily from their laptop or other device.
 The full web app is available at https://brianwendt.github.io/dndem/
 
