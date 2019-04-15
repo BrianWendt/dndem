@@ -1,3 +1,4 @@
+import React from 'react';
 import { Cookies } from 'react-cookie';
 import uuidv1 from 'uuid/v1';
 import Roll from './Roll';
@@ -7,12 +8,12 @@ export default class EncounterDataHandler {
 
     /**
      * Create an EncounterDataHandler instance with given key.
-     * @param {string} key - forward support for having multiple encounters loaded into cookie. 
+     * @param {string} key - forward support for having multiple encounters loaded into cookie.
      */
     constructor(key = 'encounter'){
         this.key = key;
         this.Cookies = new Cookies();
-        
+
         this.defaultData = {
             "name": "",
             "creatures": []
@@ -25,21 +26,30 @@ export default class EncounterDataHandler {
      */
     getEncounterData(){
         var data = this.Cookies.get(this.key) || this.defaultData;
-        data.creatures = data.creatures.sort((a, b) => ((a.init > b.init) ? -1 : 1));
+        data = this.fix(data);
+        data.creatures.sort((a, b) => ((a.init > b.init) ? -1 : 1));
         return data;
+    }
+
+    /**
+     * Update the encounter cookie.
+     * @param {object} data
+     */
+    updateEncounterData(data){
+        this.Cookies.set(this.key, data, { path: '/', maxAge: 99999999 });
     }
 
     /**
      * Update the value of a given field in the encounter data.
      * @param {string} field
-     * @param {*} value 
+     * @param {*} value
      */
     updateEncounterField(field, value){
         var data = this.getEncounterData();
         data[field] = value;
-        this.Cookies.set(this.key, data, { path: '/', maxAge: 99999999 });
+        this.updateEncounterData(data);
     }
-    
+
     /**
      * Update the creatures list in the encounter data
      * @param {array} creatures
@@ -62,7 +72,7 @@ export default class EncounterDataHandler {
      * Update a field value on a creature.
      * @param {string} key - UUID key
      * @param {string} field
-     * @param {*} value 
+     * @param {*} value
      */
     updateCreature(key, field, value){
         var creatures = this.getEncounterData().creatures.map(Creature => {
@@ -77,7 +87,7 @@ export default class EncounterDataHandler {
     /**
      * Add/Update creature.
      * If key uuid is set this function will handle the update. Otherwise it adds the creature.
-     * @param {object} creature 
+     * @param {object} creature
      */
     setCreature(Creature){
         var creatures = this.getEncounterData().creatures;
@@ -111,6 +121,7 @@ export default class EncounterDataHandler {
     /**
      * Roll initiative for creature by their key uuid.
      * @param {string} key
+     * @return {int} initiative result
      */
     rollInit(key){
         var init = 0;
@@ -123,5 +134,23 @@ export default class EncounterDataHandler {
         });
         this.updateEncounterCreatures(data);
         return init;
+    }
+
+    /**
+     * Function to support previous iterations of the encounter dataset.
+     * From 0.1.1 to 0.1.2 the data object already changed once. It'll probably happen again.
+     * @param {object} data
+     * @param {object} data after fixing
+     */
+    fix(data){
+        if(typeof data.creatures == "undefined"){
+            //0.1.1 the encouter data was only creatures list with no info
+            const creatures = data;
+            data = this.defaultData;
+            data.creatures = creatures;
+            data = this.fix(data);
+        }
+        this.updateEncounterData(data);
+        return data;
     }
 }
