@@ -1,4 +1,3 @@
-import React from 'react';
 import { Cookies } from 'react-cookie';
 import uuidv1 from 'uuid/v1';
 import Roll from './Roll';
