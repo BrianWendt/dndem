@@ -30,7 +30,7 @@ export default class PaginationNav extends React.Component {
     }
 
     generateOptions(){
-        const { pageCount, pageActive } = this.props;
+        const { pageCount } = this.props;
         let items = [];
         for (let number = 1; number <= pageCount; number++) {
             items.push(<option key={number} value={number}>Page {number}</option>);
